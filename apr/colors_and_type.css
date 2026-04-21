@@ -1,0 +1,191 @@
+/* ============================================================
+   SAINT LAURENT — Colors & Type
+   Montreal soul, Alberta soil.
+   ============================================================ */
+
+/* Fonts — self-hosted brand .ttf files (Bebas Neue, IBM Plex Mono).
+   Courier Prime + Architects Daughter remain via Google Fonts (used rarely).  */
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('./fonts/BebasNeue-Regular.ttf') format('truetype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-Thin.ttf') format('truetype'); font-weight: 100; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-ThinItalic.ttf') format('truetype'); font-weight: 100; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-ExtraLight.ttf') format('truetype'); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-ExtraLightItalic.ttf') format('truetype'); font-weight: 200; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-LightItalic.ttf') format('truetype'); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-Italic.ttf') format('truetype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-MediumItalic.ttf') format('truetype'); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-SemiBoldItalic.ttf') format('truetype'); font-weight: 600; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('./fonts/IBMPlexMono-BoldItalic.ttf') format('truetype'); font-weight: 700; font-style: italic; font-display: swap; }
+
+/* Rarely-used accents still via Google Fonts. Replace if provided. */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Architects+Daughter&display=swap');
+
+:root {
+  /* ————— COLOR: Primitives (from METADATA usage counts) ————— */
+
+  /* Forest green — #1 most used (1498×). Institutional, deli-tile, church-roof. */
+  --sl-forest-900: #2F4238;
+  --sl-forest-800: #3A553E;   /* rgb(58,85,70) — bg alt */
+  --sl-forest:     #466956;   /* rgb(70,105,86) — HERO GREEN */
+  --sl-forest-600: #5A816C;   /* rgb(90,129,108) */
+  --sl-forest-400: #87A597;
+
+  /* Cream — the "butcher paper" / enamel base */
+  --sl-cream:      #F1EDE4;   /* rgb(241,237,228) — 946× */
+  --sl-cream-warm: #FCF4DF;   /* rgb(252,244,223) — 588× — menu paper */
+  --sl-cream-dim:  #F4F4F4;   /* rgb(244,244,244) — 225× */
+
+  /* Red — appetite, sale tag, casse-croûte signage */
+  --sl-red:        #DB4F4C;   /* rgb(219,79,76) — 430× — primary red */
+  --sl-red-600:    #C84D3B;   /* rgb(200,77,59) */
+  --sl-red-700:    #A54236;   /* rgb(165,66,54) — 231× — menu body */
+  --sl-red-800:    #874139;   /* rgb(135,65,57) */
+  --sl-red-900:    #BD3D2B;
+
+  /* Ink & neutrals */
+  --sl-ink:        #2F2C2A;   /* rgb(47,44,42) — hairlines, body dark */
+  --sl-ink-800:    #302C2A;
+  --sl-ink-900:    #171717;
+  --sl-black:      #030303;
+  --sl-char:       #1A1919;   /* deep photo bg */
+
+  /* Warm accents used rarely (wax paper, mustard) */
+  --sl-mustard:    #E29F5B;
+  --sl-peach:      #FBC187;
+  --sl-brown:      #804120;
+
+  /* ————— COLOR: Semantic ————— */
+  --sl-bg:            var(--sl-cream);
+  --sl-bg-warm:       var(--sl-cream-warm);
+  --sl-bg-dark:       var(--sl-forest);
+  --sl-bg-deep:       var(--sl-char);
+
+  --sl-fg:            var(--sl-ink);
+  --sl-fg-muted:      rgba(47,44,42,0.68);
+  --sl-fg-faint:      rgba(47,44,42,0.42);
+  --sl-fg-on-dark:    var(--sl-cream);
+  --sl-fg-on-dark-muted: rgba(241,237,228,0.72);
+
+  --sl-hairline:      rgba(47,44,42,0.18);
+  --sl-hairline-dark: rgba(241,237,228,0.20);
+
+  --sl-accent:        var(--sl-red);
+  --sl-accent-strong: var(--sl-red-600);
+  --sl-accent-ink:    var(--sl-red-700);
+  --sl-action:        var(--sl-forest);
+
+  /* Shadows — ambient, warm, low-opacity */
+  --sl-shadow-sm: 0 2px 6px rgba(47,44,42,0.10);
+  --sl-shadow:    0 8px 24px rgba(47,44,42,0.14);
+  --sl-shadow-lg: 0 20px 48px rgba(47,44,42,0.22);
+  --sl-shadow-deli: 5px 14px 14px rgba(0,0,0,0.40);   /* signature offset drop used on product shots */
+  --sl-shadow-press: 2px 4px 6px rgba(0,0,0,0.35);
+
+  /* Radii — restrained. Never pill-round except for dots/checker band. */
+  --sl-r-xs: 4px;
+  --sl-r-sm: 8px;
+  --sl-r-md: 16px;
+  --sl-r-lg: 24px;   /* card default (menu-card, hero-panel) */
+  --sl-r-xl: 32px;   /* full-bleed photo cards from brand reveal */
+  --sl-r-full: 999px;
+
+  /* Spacing scale (4-based) */
+  --sl-s-1: 4px;
+  --sl-s-2: 8px;
+  --sl-s-3: 12px;
+  --sl-s-4: 16px;
+  --sl-s-5: 24px;
+  --sl-s-6: 32px;
+  --sl-s-7: 48px;
+  --sl-s-8: 64px;
+  --sl-s-9: 96px;
+  --sl-s-10: 128px;
+
+  /* ————— TYPE: Families ————— */
+  /* Display / Hungry headings */
+  --sl-font-display: 'Bebas Neue', 'Oswald', 'Impact', sans-serif;
+  /* Mono workhorse — body, labels, civic signage tone */
+  --sl-font-mono:    'IBM Plex Mono', 'Courier Prime', ui-monospace, monospace;
+  /* Secondary mono — menu body from print */
+  --sl-font-mono-alt:'Courier Prime', 'IBM Plex Mono', ui-monospace, monospace;
+  /* Hand — occasional marker notes */
+  --sl-font-hand:    'Architects Daughter', 'Caveat', 'Kalam', cursive;
+
+  /* ————— TYPE: Semantic roles ————— */
+  /* Display — 'MANGE çA', 'JUICY AF', 'LE SAINT' */
+  --sl-type-display-xl: 700 clamp(80px, 10vw, 156px)/0.9 var(--sl-font-display);
+  --sl-type-display:    700 clamp(56px, 6vw, 120px)/0.92 var(--sl-font-display);
+  --sl-type-display-sm: 700 clamp(40px, 4vw, 84px)/0.95 var(--sl-font-display);
+
+  /* Headings */
+  --sl-type-h1: 700 clamp(32px, 3.2vw, 60px)/1 var(--sl-font-display);
+  --sl-type-h2: 700 clamp(26px, 2.4vw, 44px)/1.05 var(--sl-font-display);
+  --sl-type-h3: 700 clamp(20px, 1.6vw, 28px)/1.1 var(--sl-font-display);
+
+  /* Eyebrow / civic signage label */
+  --sl-type-eyebrow: 700 14px/1.2 var(--sl-font-mono);
+
+  /* Body */
+  --sl-type-body:    400 16px/1.55 var(--sl-font-mono);
+  --sl-type-body-bold: 700 16px/1.5 var(--sl-font-mono);
+  --sl-type-body-lg: 500 18px/1.55 var(--sl-font-mono);
+  --sl-type-body-sm: 400 14px/1.5 var(--sl-font-mono);
+
+  /* Menu specific */
+  --sl-type-menu-item:  700 clamp(40px, 4vw, 83px)/0.9 var(--sl-font-display);
+  --sl-type-menu-price: 700 clamp(40px, 4vw, 83px)/0.9 var(--sl-font-display);
+  --sl-type-menu-desc:  700 16px/1.05 var(--sl-font-mono-alt);
+  --sl-type-menu-section: 700 28px/0.7 var(--sl-font-mono-alt);
+
+  /* Hand scribble */
+  --sl-type-hand:   400 36px/1.22 var(--sl-font-hand);
+}
+
+/* ————— Base element defaults ————— */
+html, body {
+  background: var(--sl-bg);
+  color: var(--sl-fg);
+  font: var(--sl-type-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 { font: var(--sl-type-h1); text-transform: uppercase; letter-spacing: 0.005em; margin: 0; }
+h2 { font: var(--sl-type-h2); text-transform: uppercase; letter-spacing: 0.005em; margin: 0; }
+h3 { font: var(--sl-type-h3); text-transform: uppercase; letter-spacing: 0.01em; margin: 0; }
+p  { margin: 0 0 1em; }
+code, kbd { font-family: var(--sl-font-mono); }
+
+.sl-display    { font: var(--sl-type-display); text-transform: uppercase; }
+.sl-display-xl { font: var(--sl-type-display-xl); text-transform: uppercase; }
+.sl-eyebrow    { font: var(--sl-type-eyebrow); text-transform: uppercase; letter-spacing: 0.08em; }
+.sl-hand       { font: var(--sl-type-hand); color: var(--sl-red); transform: rotate(-5deg); display: inline-block; }
+
+/* ————— Signature surfaces ————— */
+.sl-surface-cream  { background: var(--sl-cream); color: var(--sl-ink); }
+.sl-surface-warm   { background: var(--sl-cream-warm); color: var(--sl-ink); }
+.sl-surface-forest { background: var(--sl-forest); color: var(--sl-cream); }
+.sl-surface-red    { background: var(--sl-red); color: var(--sl-cream); }
+.sl-surface-ink    { background: var(--sl-char); color: var(--sl-cream); }
+
+/* Checker band — "tile trim, civic edge" */
+.sl-checker {
+  --c1: var(--sl-forest);
+  --c2: var(--sl-cream);
+  height: 16px;
+  background:
+    linear-gradient(90deg,
+      var(--c1) 0 12.5%, var(--c2) 12.5% 25%,
+      var(--c1) 25% 37.5%, var(--c2) 37.5% 50%,
+      var(--c1) 50% 62.5%, var(--c2) 62.5% 75%,
+      var(--c1) 75% 87.5%, var(--c2) 87.5% 100%);
+}

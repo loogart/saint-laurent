@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"><style>
+.card { padding: 0; }
+/* 2-row checkerboard made of actual squares. Size = square edge. */
+.band {
+  --sq: 18px;
+  --c1: var(--sl-forest);
+  --c2: var(--sl-cream);
+  height: calc(var(--sq) * 2);
+  background:
+    conic-gradient(var(--c1) 25%, var(--c2) 0 50%, var(--c1) 0 75%, var(--c2) 0);
+  background-size: calc(var(--sq) * 2) calc(var(--sq) * 2);
+}
+.band-red {
+  --sq: 14px;
+  --c1: var(--sl-red);
+  --c2: var(--sl-cream);
+  height: calc(var(--sq) * 2);
+  background:
+    conic-gradient(var(--c1) 25%, var(--c2) 0 50%, var(--c1) 0 75%, var(--c2) 0);
+  background-size: calc(var(--sq) * 2) calc(var(--sq) * 2);
+  margin-top: 16px;
+}
+.lab { font-family: var(--sl-font-mono); font-size: 10px; opacity:0.55; text-transform:uppercase; letter-spacing:0.06em; margin: 10px 24px 16px; }
+</style></head><body><div class="card">
+<div class="band"></div>
+<div class="lab">Signature checker — forest on cream. 2 rows of squares, tile edge / billboard / menu underline.</div>
+<div class="band-red" style="margin-left:24px;margin-right:24px"></div>
+<div class="lab">Red variant — for emphasis bars above CTAs / price tags.</div>
+</div></body></html>

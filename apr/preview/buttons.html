@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"><style>
+.r { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+.btn { font: 700 14px/1 var(--sl-font-mono); text-transform: uppercase; letter-spacing: 0.08em; padding: 14px 22px; border: 0; cursor: pointer; border-radius: 8px; }
+.primary { background: var(--sl-forest); color: var(--sl-cream); }
+.primary:hover { background: #3A553E; }
+.accent { background: var(--sl-red); color: var(--sl-cream); }
+.ghost { background: transparent; color: var(--sl-forest); box-shadow: inset 0 0 0 2px var(--sl-forest); }
+.ghost:hover { background: var(--sl-forest); color: var(--sl-cream); }
+.link { background: none; color: var(--sl-forest); border-bottom: 2px solid var(--sl-forest); padding: 2px 0; border-radius: 0; }
+.arrow::after { content: " →"; }
+.lab { font-family: var(--sl-font-mono); font-size: 10px; opacity:0.55; text-transform:uppercase; letter-spacing:0.06em; margin-top: 6px; }
+</style></head><body><div class="card">
+<div class="r">
+  <button class="btn primary arrow">Order the Saint</button>
+  <button class="btn accent arrow">Book a table</button>
+  <button class="btn ghost arrow">See the menu</button>
+  <button class="btn link">18 fev 2026</button>
+</div>
+<div class="lab">Primary (forest) · Accent (red) · Ghost · Link · All Plex Mono Bold, uppercase, tracked</div>
+</div></body></html>

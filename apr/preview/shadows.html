@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"><style>
+.row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px 0; }
+.swatch { width: 100%; height: 100px; background: var(--sl-cream-warm); border-radius: 16px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:8px; font-family: var(--sl-font-mono); font-size: 10px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
+/* Layered, low-opacity stops for a softer falloff. */
+.s1 { box-shadow: 0 1px 2px rgba(47,44,42,0.06), 0 4px 10px rgba(47,44,42,0.07); }
+.s2 { box-shadow: 0 2px 6px rgba(47,44,42,0.06), 0 12px 32px rgba(47,44,42,0.10); }
+.s3 { box-shadow: 0 4px 12px rgba(47,44,42,0.08), 0 28px 64px rgba(47,44,42,0.14); }
+.s4 { box-shadow: 3px 6px 10px rgba(0,0,0,0.14), 6px 18px 30px rgba(0,0,0,0.22); }
+.lab { font-family: var(--sl-font-mono); font-size: 10px; opacity:0.6; text-align:center; margin-top:6px; text-transform:uppercase; letter-spacing:0.06em; }
+</style></head><body><div class="card">
+<div class="row">
+  <div><div class="swatch s1">sm</div><div class="lab">sm — resting card</div></div>
+  <div><div class="swatch s2">md</div><div class="lab">md — lifted card</div></div>
+  <div><div class="swatch s3">lg</div><div class="lab">lg — modal / overlay</div></div>
+  <div><div class="swatch s4">deli</div><div class="lab">deli — product shot</div></div>
+</div>
+</div></body></html>

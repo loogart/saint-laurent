@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"><style>
+.f { display:flex; flex-direction: column; gap: 14px; max-width: 420px; }
+label { font: 700 11px/1 var(--sl-font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--sl-forest); }
+input, select, textarea { font: 700 15px/1.4 var(--sl-font-mono); background: var(--sl-cream-warm); border: 2px solid var(--sl-hairline); border-radius: 8px; padding: 12px 14px; color: var(--sl-ink); outline: none; }
+input:focus { border-color: var(--sl-forest); }
+.err input { border-color: var(--sl-red); background: #fbe9e7; }
+.hint { font: 400 italic 12px/1.3 var(--sl-font-mono); color: var(--sl-red); }
+</style></head><body><div class="card">
+<div class="f">
+  <div><label>Your name</label><input value="Marc-André" style="margin-top:6px;display:block;width:100%;box-sizing:border-box;"></div>
+  <div class="err"><label style="color:var(--sl-red)">Email</label><input value="not-an-email" style="margin-top:6px;display:block;width:100%;box-sizing:border-box;"><div class="hint">câlisse, that's not an email</div></div>
+</div>
+</div></body></html>
