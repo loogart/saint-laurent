@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pricing Slider</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Pricing Slider — self-contained component
+     All styles are scoped under .ps-root to avoid clashes.
+     Drop this whole <style>+<div class="ps-root">…</div>+<script>
+     into any page to embed.
+     ============================================================ */
+  .ps-root {
+    --ps-orange: #f26522;
+    --ps-black: #1a1a1a;
+    --ps-white: #ffffff;
+    --ps-muted: rgba(0,0,0,0.5);
+    --ps-border: rgba(0,0,0,0.08);
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    color: var(--ps-black);
+    background: var(--ps-white);
+    width: 100%;
+    box-sizing: border-box;
+    padding: 40px;
+  }
+  .ps-root *, .ps-root *::before, .ps-root *::after { box-sizing: border-box; }
+
+  .ps-heading {
+    font-family: 'Google Sans', sans-serif;
+    color: var(--ps-black);
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 40px 0;
+  }
+
+  /* ---- Mobile pills (hidden by default) ---- */
+  .ps-pills {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .ps-pill {
+    border: 0;
+    cursor: pointer;
+    font-family: 'Google Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 60px;
+    background: rgba(0,0,0,0.05);
+    color: var(--ps-black);
+    transition: background 0.2s, color 0.2s;
+  }
+  .ps-pill.is-active { background: var(--ps-orange); color: #fff; }
+
+  /* ---- Desktop labels ---- */
+  .ps-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
+  .ps-label-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    transition: all 0.2s;
+  }
+  .ps-label-main {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0,0,0,0.35);
+    transition: color 0.2s, font-weight 0.2s;
+  }
+  .ps-label-sub {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-weight: 400;
+    color: rgba(0,0,0,0.3);
+    transition: color 0.2s, font-weight 0.2s;
+  }
+  .ps-label-btn.is-active .ps-label-main { color: var(--ps-black); font-weight: 700; }
+  .ps-label-btn.is-active .ps-label-sub { color: var(--ps-black); font-weight: 600; }
+
+  /* ---- Slider track ---- */
+  .ps-track {
+    position: relative;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    touch-action: none;
+  }
+  .ps-track-bg {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.08);
+  }
+  .ps-track-fill {
+    position: absolute;
+    left: 12px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--ps-orange);
+    transition: width 0.15s;
+  }
+  .ps-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.12);
+    transform: scale(1);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .ps-dot.is-filled { background: var(--ps-orange); }
+  .ps-dot.is-active { transform: scale(0); }
+  .ps-thumb {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--ps-orange);
+    box-shadow: 0 2px 12px rgba(242,101,34,0.35);
+    border: 3px solid #fff;
+    transition: left 0.15s;
+  }
+
+  /* ---- Card ---- */
+  .ps-card {
+    margin-top: 32px;
+    overflow: hidden;
+    border: 1px solid var(--ps-border);
+  }
+  .ps-row { display: flex; }
+  .ps-col-price {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    border-right: 1px solid var(--ps-border);
+  }
+  .ps-eyebrow {
+    color: var(--ps-orange);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+  }
+  .ps-price-row { display: flex; align-items: baseline; }
+  .ps-dollars {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ps-black);
+  }
+  .ps-cents {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ps-black);
+  }
+  .ps-per { font-size: 16px; opacity: 0.5; margin: 8px 0 0 0; color: var(--ps-black); }
+  .ps-fineprint { font-size: 14px; opacity: 0.4; margin: 4px 0 0 0; color: var(--ps-black); }
+
+  .ps-col-features {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    gap: 20px;
+  }
+  .ps-feature { display: flex; align-items: center; gap: 12px; }
+  .ps-check-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--ps-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ps-feature-text { font-size: 16px; font-weight: 600; color: var(--ps-black); }
+
+  /* ---- Custom (enterprise) state ---- */
+  .ps-custom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 24px;
+    text-align: center;
+  }
+  .ps-custom-title {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ps-black);
+    margin: 0 0 12px 0;
+  }
+  .ps-custom-sub { font-size: 16px; opacity: 0.5; margin: 0 0 24px 0; color: var(--ps-black); }
+  .ps-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ps-orange);
+    transition: opacity 0.2s;
+  }
+  .ps-link:hover { opacity: 0.8; }
+
+  /* ---- Responsive: tablet (<=768px) ---- */
+  @media (max-width: 768px) {
+    .ps-root { padding: 24px; }
+    .ps-heading { font-size: 20px; margin-bottom: 32px; }
+    .ps-label-main { font-size: 18px; }
+    .ps-row { flex-direction: column; }
+    .ps-col-price { border-right: 0; border-bottom: 1px solid var(--ps-border); }
+    .ps-dollars { font-size: 60px; }
+    .ps-cents { font-size: 24px; }
+    .ps-col-features { padding: 32px; }
+    .ps-custom-title { font-size: 24px; }
+  }
+
+  /* ---- Responsive: mobile (<=480px) ---- */
+  @media (max-width: 480px) {
+    .ps-root { padding: 16px; }
+    .ps-heading { font-size: 18px; margin-bottom: 24px; }
+    .ps-pills { display: flex; }
+    .ps-labels, .ps-track { display: none; }
+    .ps-card { margin-top: 24px; }
+    .ps-col-price { padding: 32px 16px; }
+    .ps-dollars { font-size: 48px; }
+    .ps-cents { font-size: 20px; }
+    .ps-col-features { padding: 24px; gap: 16px; }
+    .ps-feature-text { font-size: 14px; }
+    .ps-custom { padding: 40px 24px; }
+    .ps-custom-title { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     Embeddable markup starts here. Copy from <div class="ps-root">
+     down to the closing </div> along with the <style> and <script>
+     to drop into any page.
+     ============================================================ -->
+<div class="ps-root" id="psRoot"
+     data-contact-href="#contact"
+     data-contact-text="Talk to our team">
+  <h2 class="ps-heading">How many users do you need?</h2>
+
+  <!-- Mobile pills -->
+  <div class="ps-pills" id="psPills"></div>
+
+  <!-- Desktop labels -->
+  <div class="ps-labels" id="psLabels"></div>
+
+  <!-- Slider track -->
+  <div class="ps-track" id="psTrack">
+    <div class="ps-track-bg"></div>
+    <div class="ps-track-fill" id="psFill"></div>
+    <!-- dots + thumb injected by JS -->
+  </div>
+
+  <!-- Card -->
+  <div class="ps-card" id="psCard"></div>
+</div>
+
+<script>
+(function () {
+  const tiers = [
+    { label: '1',       sublabel: 'SINGLE EXTENSION', dollars: '$34', cents: '.95', isCustom: false, mobile: '1 User' },
+    { label: '2 – 10',  sublabel: 'USERS',            dollars: '$25', cents: '.00', isCustom: false, mobile: '2–10'   },
+    { label: '11 – 50', sublabel: 'USERS',            dollars: '$22', cents: '.50', isCustom: false, mobile: '11–50'  },
+    { label: '51 – 100',sublabel: 'USERS',            dollars: '$20', cents: '.00', isCustom: false, mobile: '51–100' },
+    { label: '100+',    sublabel: 'USERS',            dollars: '',    cents: '',    isCustom: true,  mobile: '100+'   },
+  ];
+  const features = ['Unlimited calling', 'Unlimited lines', 'All features included'];
+
+  const root   = document.getElementById('psRoot');
+  const pills  = document.getElementById('psPills');
+  const labels = document.getElementById('psLabels');
+  const track  = document.getElementById('psTrack');
+  const fill   = document.getElementById('psFill');
+  const card   = document.getElementById('psCard');
+
+  const contactHref = root.dataset.contactHref || '#';
+  const contactText = root.dataset.contactText || 'Talk to our team';
+
+  let activeIndex = 1;
+  let dragging = false;
+
+  /* ---------- Build pills ---------- */
+  tiers.forEach((t, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ps-pill';
+    b.textContent = t.mobile;
+    b.addEventListener('click', () => setActive(i));
+    pills.appendChild(b);
+  });
+
+  /* ---------- Build labels ---------- */
+  tiers.forEach((t, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ps-label-btn';
+    b.innerHTML =
+      '<span class="ps-label-main">' + t.label + '</span>' +
+      '<span class="ps-label-sub">' + t.sublabel + '</span>';
+    b.addEventListener('click', () => setActive(i));
+    labels.appendChild(b);
+  });
+
+  /* ---------- Build dots + thumb ---------- */
+  const dotEls = [];
+  tiers.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'ps-dot';
+    const pos = (i / (tiers.length - 1)) * 100;
+    d.style.left = 'calc(' + pos + '% - 6px)';
+    track.appendChild(d);
+    dotEls.push(d);
+  });
+  const thumb = document.createElement('div');
+  thumb.className = 'ps-thumb';
+  track.appendChild(thumb);
+
+  /* ---------- Pointer handling on track ---------- */
+  function indexFromX(clientX) {
+    const rect = track.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const pct = Math.max(0, Math.min(1, x / rect.width));
+    return Math.round(pct * (tiers.length - 1));
+  }
+  track.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    track.setPointerCapture(e.pointerId);
+    setActive(indexFromX(e.clientX));
+  });
+  track.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    setActive(indexFromX(e.clientX));
+  });
+  const stopDrag = () => { dragging = false; };
+  track.addEventListener('pointerup', stopDrag);
+  track.addEventListener('pointercancel', stopDrag);
+
+  /* ---------- State updates ---------- */
+  function setActive(i) {
+    if (i === activeIndex) return;
+    activeIndex = i;
+    render();
+  }
+
+  function render() {
+    // pills
+    [...pills.children].forEach((el, i) => {
+      el.classList.toggle('is-active', i === activeIndex);
+    });
+    // labels
+    [...labels.children].forEach((el, i) => {
+      el.classList.toggle('is-active', i === activeIndex);
+    });
+    // dots
+    dotEls.forEach((d, i) => {
+      d.classList.toggle('is-filled', i <= activeIndex);
+      d.classList.toggle('is-active', i === activeIndex);
+    });
+    // fill + thumb
+    const pct = (activeIndex / (tiers.length - 1)) * 100;
+    const fillAdjust = pct < 1 ? 0 : 12;
+    fill.style.width = 'calc(' + pct + '% - 24px + ' + fillAdjust + 'px)';
+    thumb.style.left = 'calc(' + pct + '% - 14px)';
+    // card
+    renderCard();
+  }
+
+  function renderCard() {
+    const tier = tiers[activeIndex];
+    if (tier.isCustom) {
+      card.innerHTML =
+        '<div class="ps-custom">' +
+          '<p class="ps-eyebrow">ENTERPRISE</p>' +
+          '<h3 class="ps-custom-title">Custom Pricing</h3>' +
+          '<p class="ps-custom-sub">Tailored to your organization\'s needs.</p>' +
+          '<a class="ps-link" href="' + contactHref + '">' +
+            contactText +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>' +
+          '</a>' +
+        '</div>';
+    } else {
+      const featureRows = features.map(f =>
+        '<div class="ps-feature">' +
+          '<div class="ps-check-circle">' +
+            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f26522" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+          '</div>' +
+          '<span class="ps-feature-text">' + f + '</span>' +
+        '</div>'
+      ).join('');
+
+      card.innerHTML =
+        '<div class="ps-row">' +
+          '<div class="ps-col-price">' +
+            '<p class="ps-eyebrow">YOUR PLAN</p>' +
+            '<div class="ps-price-row">' +
+              '<span class="ps-dollars">' + tier.dollars + '</span>' +
+              '<span class="ps-cents">'   + tier.cents   + '</span>' +
+            '</div>' +
+            '<p class="ps-per">/ user / month</p>' +
+            '<p class="ps-fineprint">One fee. Contract-free.</p>' +
+          '</div>' +
+          '<div class="ps-col-features">' + featureRows + '</div>' +
+        '</div>';
+    }
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
